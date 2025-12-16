@@ -11,7 +11,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <Image
               src="/p1.jpg"
-              alt="Deal Drop Logo"
+              alt="Pricey logo"
               width={600}
               height={200}
               className="h-10 w-auto"
