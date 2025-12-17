@@ -37,10 +37,24 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog"
 import { Button } from "./ui/button"
-import { use } from "react"
+// import { use } from "react"
+import { createClient } from "@/utils/supabase/client";
 
 // ✅ CORRECT: Receive props as a single destructured object { isOpen, onClose }
 export function AuthModal({ isOpen, onClose }) {
+
+  const supabase = createClient();
+
+  const handleGoogleLogin = async () => {
+    const { origin } = window.location;
+
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${origin}/auth/callback`,
+      },
+    });
+  };
   return (
     // This is now correctly wired up:
     // 'open' receives the boolean (isOpen)
