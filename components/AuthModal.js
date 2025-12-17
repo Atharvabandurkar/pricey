@@ -1,32 +1,3 @@
-// "use client"
-
-// import {
-//   Dialog,
-//   DialogClose,
-//   DialogContent,
-//   DialogDescription,
-//   DialogFooter,
-//   DialogHeader,
-//   DialogTitle,
-//   DialogTrigger,
-// } from "@/components/ui/dialog"
-
-
-// export function AuthModal(isOpen, onClose) {
-//   return (
-//     <Dialog open={isOpen} onOpenChange={onClose}>
-//       <DialogContent className="sm:max-w-md">
-//         <DialogHeader>
-//           <DialogTitle>Sign In</DialogTitle>
-//           <DialogDescription>
-//             Track product prices and get alerts on price drops
-//           </DialogDescription>
-//         </DialogHeader>
-
-//       </DialogContent>
-//     </Dialog>
-//   )
-// }
 "use client"
 
 import {
