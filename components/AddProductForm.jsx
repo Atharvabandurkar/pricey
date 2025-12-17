@@ -5,6 +5,8 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react';
 import { AuthModal } from './AuthModal';
+import { addProduct } from '@/app/actions';
+import { toast } from 'sonner';
 
 // 1. Keep the Named Export
 export const AddProductForm = ({ user }) => {
@@ -14,22 +16,28 @@ export const AddProductForm = ({ user }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!user) {
             setShowAuthModal(true);
             return;
         }
 
         setLoading(true);
-        // Your API call logic will go here
-        try {
-            console.log("Tracking URL:", url);
-        } catch (error) {
-            console.error("Failed to track price:", error);
-        } finally {
-            setLoading(false);
-            setUrl(""); 
+
+        setLoading(true);
+
+        const formData = new FormData();
+        formData.append("url", url);
+
+        const result = await addProduct(formData);
+        if (result.error) {
+            toast.error(result.error);
+        } else {
+            toast.success(result.message || "Product tracked successfully!");
+            setUrl("");
         }
+
+        setLoading(false);
     };
 
     // // 2. This logic is correct: It returns null (nothing to render) if the user is not logged in.
@@ -38,45 +46,45 @@ export const AddProductForm = ({ user }) => {
     // }
 
     return (
-      <>
-        <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto px-4">
-            <div className="flex flex-col sm:flex-row gap-2">
-                <Input
-                    type="url"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    placeholder="Paste product URL (Amazon, Walmart, etc.)"
-                    className="h-12 text-base"
-                    required
-                    disabled={loading}
-                />
+        <>
+            <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto px-4">
+                <div className="flex flex-col sm:flex-row gap-2">
+                    <Input
+                        type="url"
+                        value={url}
+                        onChange={(e) => setUrl(e.target.value)}
+                        placeholder="Paste product URL (Amazon, Walmart, etc.)"
+                        className="h-12 text-base"
+                        required
+                        disabled={loading}
+                    />
 
-                <Button
-                    type="submit"
-                    disabled={loading || !url} 
-                    className="bg-orange-500 hover:bg-orange-600 h-10 sm:h-12 px-8"
-                    size="lg"
-                >
-                    {loading ? (
-                        <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Adding...
-                        </>
-                    ) : (
-                        "Track Price"
-                    )}
-                </Button>
-            </div>
-        </form>
+                    <Button
+                        type="submit"
+                        disabled={loading || !url}
+                        className="bg-orange-500 hover:bg-orange-600 h-10 sm:h-12 px-8"
+                        size="lg"
+                    >
+                        {loading ? (
+                            <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Adding...
+                            </>
+                        ) : (
+                            "Track Price"
+                        )}
+                    </Button>
+                </div>
+            </form>
 
-        {/* auth modal */}
-        <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-      />
-         </>
+            {/* auth modal */}
+            <AuthModal
+                isOpen={showAuthModal}
+                onClose={() => setShowAuthModal(false)}
+            />
+        </>
     )
-   
+
 
 }
 
