@@ -4,17 +4,19 @@ import React, { useState } from 'react'
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Loader2 } from 'lucide-react';
+import { AuthModal } from './AuthModal';
 
 // 1. Keep the Named Export
 export const AddProductForm = ({ user }) => {
     const [url, setUrl] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showAuthModal, setShowAuthModal] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         
         if (!user) {
-            alert("Please sign in to start tracking prices.");
+            setShowAuthModal(true);
             return;
         }
 
@@ -66,6 +68,12 @@ export const AddProductForm = ({ user }) => {
                 </Button>
             </div>
         </form>
+
+        {/* auth modal */}
+        <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
          </>
     )
    
