@@ -34,6 +34,7 @@ import { useState } from "react";
 import { AuthModal } from "./AuthModal";
 import { Button } from "@/components/ui/button";
 import { LogIn, LogOut } from "lucide-react";
+import { signOut } from "@/app/actions";
 
 // ⚠️ REQUIRED FIX: Using 'export const' for Named Export
 export const AuthButton = ({ user }) => {
@@ -42,7 +43,7 @@ export const AuthButton = ({ user }) => {
     // Conditional logic for sign in/out display
     if (user) {
         return (
-            <form action={() => {}}>
+            <form action={signOut}>
                 <Button variant="ghost" size="sm" type="submit" className="gap-2">
                     <LogOut className="w-4 h-4" />
                     Sign Out
