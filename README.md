@@ -1,72 +1,66 @@
-🚀 Pricey (or ValueVault)
-A modern, full-stack e-commerce price tracker for the Gen-Z era.
+# Pricey
 
-📖 Overview
-Pricey is a high-performance price tracking engine that allows users to monitor products across multiple e-commerce platforms. It utilizes AI-powered web scraping to extract real-time data and provides historical price trends via interactive charts.
+A modern price tracking application that monitors product prices across e-commerce platforms and sends alerts when prices drop.
 
-Key Features
-AI-Powered Scraping: Integration with Firecrawl to bypass bot detection and extract structured JSON data (Product Name, Price, Image).
+## Features
 
-Price History Tracking: Automated price checks that log historical data into Supabase.
+- **Price Tracking** — Monitor products from any e-commerce site
+- **Price History** — View historical price trends with interactive charts
+- **Automated Checks** — Scheduled price updates via cron jobs
+- **Price Drop Alerts** — Email notifications when prices decrease
+- **Google OAuth** — Secure authentication with Supabase
 
-Interactive Visualizations: Dynamic line charts built with Recharts to visualize price volatility.
+## Tech Stack
 
-Secure Auth: Google OAuth integration via Supabase Auth.
+- **Frontend**: Next.js 16, React 19, Tailwind CSS, Shadcn UI
+- **Backend**: Next.js Server Actions, Supabase (PostgreSQL)
+- **Scraping**: Firecrawl API
+- **Charts**: Recharts
+- **Deployment**: Vercel
 
-Responsive UI: Mobile-first design using Tailwind CSS and Shadcn UI.
+## Getting Started
 
-🛠️ Tech Stack
-Frontend: Next.js (App Router), React 19, Tailwind CSS, Shadcn UI
+### Prerequisites
 
-Backend: Next.js Server Actions, Supabase (PostgreSQL)
+- Node.js 18+
+- Supabase project
+- Firecrawl API key
 
-Data Extraction: Firecrawl API (v2)
+### Installation
 
-Charts: Recharts
+1. Clone the repository:
 
-Deployment: Vercel
-
-⚙️ Getting Started
-Prerequisites
-Node.js 18+
-
-A Supabase Project
-
-A Firecrawl API Key
-
-Installation
-Clone the repository:
-
-Bash
-
-git clone (https://github.com/Atharvabandurkar/pricey)
+```bash
+git clone https://github.com/Atharvabandurkar/pricey
 cd pricey
-Install dependencies:
+```
 
-Bash
+2. Install dependencies:
 
+```bash
 npm install
-Set up Environment Variables: Create a .env.local file in the root directory:
+```
 
-Code snippet
+3. Create `.env.local` file:
 
+```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 FIRECRAWL_API_KEY=your_firecrawl_key
-Run the development server:
+CRON_SECRET=your_cron_secret
+RESEND_API_KEY=your_resend_key
+```
 
-Bash
+4. Run the development server:
 
+```bash
 npm run dev
-📡 API Architecture
-The application uses an Atomic Deployment strategy on Vercel.
+```
 
-When a user submits a URL:
+## Usage
 
-Client triggers a Server Action.
-
-Server calls the Firecrawl v2 API with a custom JSON schema.
-
-Supabase performs an upsert to update the price and log the history.
-
-Next.js revalidates the data cache using revalidatePath.
+1. Sign in with Google OAuth
+2. Add a product URL from any e-commerce site
+3. View price history and charts
+4. Receive email alerts when prices drop
