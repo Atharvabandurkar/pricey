@@ -134,12 +134,26 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-// Create this helper function at the top of your file
+// // Create this helper function at the top of your file
+// const formatPrice = (price, currencyCode) => {
+//   return new Intl.NumberFormat("en-IN", {
+//     style: "currency",
+//     currency: currencyCode, // e.g. "INR"
+//   }).format(price);
+// };
 const formatPrice = (price, currencyCode) => {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: currencyCode, // e.g. "INR"
-  }).format(price);
+  // If the database has "₹", convert it to "INR" so the browser doesn't crash
+  const validCode = (currencyCode === "₹" || !currencyCode) ? "INR" : currencyCode;
+  
+  try {
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: validCode,
+    }).format(price);
+  } catch (e) {
+    // Fallback if something else goes wrong
+    return `₹${price}`;
+  }
 };
 
 export default function ProductCard({ product }) {
