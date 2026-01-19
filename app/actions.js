@@ -359,16 +359,24 @@ export async function addProduct(formData) {
 
     const newPrice = parseFloat(productData.currentPrice);
 
-    // 1. Get the raw currency from scraper
-    let currency = productData.currencyCode || "INR";
+    // // 1. Get the raw currency from scraper
+    // let currency = productData.currencyCode || "INR";
 
-    // 2. Normalize: Convert symbols or common abbreviations to standard codes
-    if (currency === "₹" || currency === "Rs" || currency === "Rs.") {
+    // // 2. Normalize: Convert symbols or common abbreviations to standard codes
+    // if (currency === "₹" || currency === "Rs" || currency === "Rs.") {
+    //   currency = "INR";
+    // } else if (currency === "$") {
+    //   currency = "USD";
+    // }
+
+    // In actions.js
+    let currency = (productData.currencyCode || "INR").trim().toUpperCase();
+
+    if (currency === "₹" || currency === "RS" || currency === "RS.") {
       currency = "INR";
     } else if (currency === "$") {
       currency = "USD";
     }
-
     // 3. Check if product already exists
     const { data: existingProduct } = await supabase
       .from("product")
