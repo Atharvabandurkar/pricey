@@ -140,7 +140,7 @@
 import { useState } from "react";
 import { deleteProduct } from "@/app/actions";
 import PriceChart from "./PriceChart";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -150,7 +150,7 @@ import {
   ChevronDown,
   ChevronUp,
   Loader2,
-  ArrowDownCircle,
+  History,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -171,7 +171,6 @@ export default function ProductCard({ product }) {
   const [showChart, setShowChart] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  // Calculate discount percentage if original_price exists
   const discount = product.original_price 
     ? Math.round(((product.original_price - product.current_price) / product.original_price) * 100)
     : null;
@@ -187,24 +186,24 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <Card className="overflow-hidden border-zinc-200 dark:border-zinc-800 transition-all duration-300 hover:shadow-xl hover:border-indigo-500/30 group">
+    <Card className="overflow-hidden border-[#2D3E4E]/10 bg-white shadow-sm transition-all duration-300 hover:shadow-md">
       <div className="p-5">
         <div className="flex gap-5">
-          {/* Image Container with Hover Effect */}
-          <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-xl border border-zinc-100 bg-zinc-50 dark:bg-zinc-900">
+          {/* Image Container */}
+          <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-xl border-2 border-[#1A2632] bg-white">
             {product.image_url ? (
               <img
                 src={product.image_url}
                 alt={product.name}
-                className="h-full w-full object-contain p-2 transition-transform duration-300 group-hover:scale-110"
+                className="h-full w-full object-contain p-2"
               />
             ) : (
-              <div className="flex h-full items-center justify-center text-zinc-400">
+              <div className="flex h-full items-center justify-center text-[#2D3E4E]/40">
                 No Image
               </div>
             )}
             {discount > 0 && (
-              <div className="absolute top-0 left-0 bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded-br-lg">
+              <div className="absolute top-2 left-2 bg-[#1A2632] text-white text-[10px] font-bold px-2 py-1 rounded">
                 {discount}% OFF
               </div>
             )}
@@ -212,57 +211,55 @@ export default function ProductCard({ product }) {
 
           {/* Info Section */}
           <div className="flex flex-1 flex-col min-w-0">
-            <div className="flex items-start justify-between gap-2">
-              <h3 className="font-medium text-zinc-900 dark:text-zinc-100 line-clamp-2 leading-tight group-hover:text-indigo-600 transition-colors">
-                {product.name}
-              </h3>
-            </div>
+            <h3 className="font-bold text-[#1A2632] text-lg line-clamp-2 leading-tight">
+              {product.name}
+            </h3>
 
-            <div className="mt-3 flex items-center gap-3">
-              <span className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white">
+            <div className="mt-2 flex items-center gap-3">
+              <span className="text-3xl font-bold text-[#B87D5B]">
                 {formatPrice(product.current_price, product.currency)}
               </span>
               
-              {/* Status Badge */}
-              <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 gap-1 py-0.5">
-                <TrendingDown className="w-3 h-3" />
-                Live
+              <Badge variant="secondary" className="bg-[#E9F0F5] text-[#1A2632] border-none flex gap-1">
+                <TrendingDown className="w-3 h-3 text-[#B87D5B]" />
+                Tracking
               </Badge>
             </div>
             
-            <p className="text-xs text-zinc-500 mt-1">
+            <p className="text-xs text-[#2D3E4E]/60 mt-1 uppercase tracking-wider font-medium">
               Last updated: {new Date(product.updated_at).toLocaleDateString()}
             </p>
           </div>
         </div>
 
         {/* Action Bar */}
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-2 border-t border-zinc-100 dark:border-zinc-800 pt-4">
+        <div className="mt-6 flex items-center justify-between gap-2 border-t border-[#2D3E4E]/5 pt-4">
           <div className="flex gap-2">
             <Button
-              variant={showChart ? "secondary" : "outline"}
+              variant="outline"
               size="sm"
               onClick={() => setShowChart(!showChart)}
-              className="h-9 rounded-lg"
+              className={`h-10 rounded-lg border-[#1A2632] text-[#1A2632] font-semibold transition-colors ${showChart ? 'bg-[#1A2632] text-white' : 'hover:bg-[#1A2632]/5'}`}
             >
-              {showChart ? <ChevronUp className="w-4 h-4 mr-1" /> : <ChevronDown className="w-4 h-4 mr-1" />}
+              <History className="w-4 h-4 mr-2" />
               History
+              {showChart ? <ChevronUp className="w-4 h-4 ml-1" /> : <ChevronDown className="w-4 h-4 ml-1" />}
             </Button>
 
-            <Button variant="outline" size="sm" asChild className="h-9 rounded-lg shadow-sm">
+            <Button variant="outline" size="sm" asChild className="h-10 rounded-lg border-[#2D3E4E]/20 bg-[#F1F5F8] text-[#1A2632] hover:bg-[#E2E8F0]">
               <Link href={product.url} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="w-4 h-4 mr-1" />
+                <ExternalLink className="w-4 h-4 mr-2" />
                 Store
               </Link>
             </Button>
           </div>
 
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             onClick={handleDelete}
             disabled={deleting}
-            className="h-9 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+            className="h-10 w-10 p-0 border-[#E53E3E]/20 text-[#E53E3E] hover:bg-[#E53E3E] hover:text-white rounded-lg transition-all"
           >
             {deleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
           </Button>
@@ -271,10 +268,10 @@ export default function ProductCard({ product }) {
 
       {/* Expanded Chart Area */}
       {showChart && (
-        <div className="bg-zinc-50 dark:bg-zinc-900/50 border-t border-zinc-100 dark:border-zinc-800 p-4 animate-in slide-in-from-top-2 duration-300">
-            <div className="flex items-center gap-2 mb-4 text-sm font-medium text-zinc-600">
-                <ArrowDownCircle className="w-4 h-4 text-indigo-500" />
-                Price Trends
+        <div className="bg-[#F8FAFC] border-t border-[#2D3E4E]/5 p-6 animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-2 mb-4 text-sm font-bold text-[#1A2632]">
+                <TrendingDown className="w-4 h-4 text-[#B87D5B]" />
+                PRICE TRENDS
             </div>
           <PriceChart productId={product.id} />
         </div>
