@@ -17,6 +17,17 @@ A modern price tracking application that monitors product prices across e-commer
 - **Scraping**: Firecrawl API
 - **Charts**: Recharts
 - **Deployment**: Vercel
+---
+
+## Roadmap: WhatsApp Integration (Coming Soon)
+
+We are currently engineering a high-frequency notification layer to bring **Pricey** directly to your most used messaging platform.
+
+* **Direct Signal Alerts** — Receive critical "Price Drop" signals directly on WhatsApp for immediate acquisition.
+* **Forward-to-Track** — A zero-friction workflow where forwarding a product link to the Pricey Bot initiates instant tracking.
+* **Portfolio Briefs** — Curated morning updates of your tracked assets' performance delivered directly to your chat.
+
+---
 
 ## Getting Started
 
