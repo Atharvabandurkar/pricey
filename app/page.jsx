@@ -222,9 +222,142 @@
 //   )
 // }
 
+// import { AuthButton } from "@/components/AuthButton";
+// import { AddProductForm } from "@/components/AddProductForm";
+// import { Bell, Rabbit, Shield, TrendingDown, Sparkles } from "lucide-react"
+// import Image from "next/image"
+// import { createClient } from "@/utils/supabase/server";
+// import { getProducts } from "./actions";
+// import Productcard from "@/components/Productcard";
+
+// export default async function Home() {
+//   const supabase = await createClient();
+//   const { data: { user } } = await supabase.auth.getUser();
+//   const products = user ? await getProducts() : [];
+
+//   const FEATURES = [
+//     {
+//       icon: Rabbit,
+//       title: "Lightning Fast",
+//       description: "Extract prices in seconds, handling dynamic content with ease.",
+//     },
+//     {
+//       icon: Shield,
+//       title: "Always Reliable",
+//       description: "Anti-bot protection ensures your tracking never skips a beat.",
+//     },
+//     {
+//       icon: Bell,
+//       title: "Smart Alerts",
+//       description: "Instant notifications the moment a price hits your target.",
+//     },
+//   ];
+
+//   return (
+//     <main className="min-h-screen bg-[#fafafa] selection:bg-indigo-100">
+//       {/* Decorative Background Elements */}
+//       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-indigo-50/50 via-transparent to-transparent -z-10" />
+
+//       {/* Header */}
+//       <header className="bg-white/70 backdrop-blur-xl border-b border-slate-200/60 sticky top-0 z-50">
+//         <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+//           <div className="flex items-center gap-2 group transition-all">
+//             <div className="bg-indigo-600 p-1.5 rounded-lg group-hover:rotate-6 transition-transform">
+//                <TrendingDown className="w-5 h-5 text-white" />
+//             </div>
+//             <span className="text-xl font-bold tracking-tight text-slate-900">Pricey</span>
+//           </div>
+//           <AuthButton user={user} />
+//         </div>
+//       </header>
+
+//       {/* Hero Section */}
+//       <section className="pt-24 pb-16 px-6">
+//         <div className="max-w-7xl mx-auto text-center">
+//           <div className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-100 text-indigo-700 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-8 animate-fade-in">
+//             <Sparkles className="w-3 h-3" />
+//             Made with ❤️ by MYTH
+//           </div>
+
+//           <h1 className="text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-[1.1]">
+//             Track Prices <span className="text-transparent bg-clip-text bg-linear-to-r from-indigo-600 to-violet-600">Like a Pro.</span>
+//           </h1>
+//           <p className="text-lg text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+//             Stop overpaying. Join thousands of smart shoppers using Pricey to monitor 
+//             e-commerce trends and catch every single deal.
+//           </p>
+//         </div>
+//       </section>
+
+//       {/* Add Product Form - Adding a shadow wrapper for depth */}
+//       <div className="relative z-20 -mb-10 px-6">
+//         <div className="max-w-3xl mx-auto drop-shadow-[0_20px_50px_rgba(79,70,229,0.1)]">
+//           <AddProductForm user={user} />
+//         </div>
+//       </div>
+
+//       {/* Features - Modern Minimalist Cards */}
+//       {products.length === 0 && (
+//         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mt-32 px-6">
+//           {FEATURES.map(({ icon: Icon, title, description }) => (
+//             <div
+//               key={title}
+//               className="group bg-white p-8 rounded-2xl border border-slate-200/60 hover:border-indigo-200 hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300"
+//             >
+//               <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+//                 <Icon className="w-6 h-6 text-slate-600 group-hover:text-white" />
+//               </div>
+//               <h3 className="font-bold text-slate-900 mb-3 text-lg">{title}</h3>
+//               <p className="text-slate-500 leading-relaxed text-sm">{description}</p>
+//             </div>
+//           ))}
+//         </div>
+//       )}
+
+//       {/* Products Grid */}
+//       {user && products.length > 0 && (
+//         <section className="max-w-7xl mx-auto px-6 mt-24 pb-24">
+//           <div className="flex items-end justify-between mb-10 border-b border-slate-100 pb-6">
+//             <div>
+//               <h3 className="text-3xl font-bold text-slate-900">Your Collection</h3>
+//               <p className="text-slate-500 text-sm mt-1">Real-time tracking active</p>
+//             </div>
+//             <div className="bg-slate-100 px-3 py-1 rounded-md text-xs font-bold text-slate-600 uppercase tracking-tighter">
+//               {products.length} {products.length === 1 ? "Item" : "Items"}
+//             </div>
+//           </div>
+
+//           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2 items-start">
+//             {products.map((product) => (
+//               <Productcard key={product.id} product={product} />
+//             ))}
+//           </div>
+//         </section>
+//       )}
+
+//       {/* Empty State - Using a softer border and cleaner type */}
+//       {user && products.length === 0 && (
+//         <section className="max-w-2xl mx-auto px-6 mt-20 pb-24 text-center">
+//           <div className="bg-white rounded-3xl border border-slate-200 p-16 shadow-xs">
+//             <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+//               <TrendingDown className="w-10 h-10 text-slate-300" />
+//             </div>
+//             <h3 className="text-2xl font-bold text-slate-900 mb-3">
+//               Your dashboard is empty
+//             </h3>
+//             <p className="text-slate-500 max-w-xs mx-auto">
+//               Paste a link above to see the price history magic happen.
+//             </p>
+//           </div>
+//         </section>
+//       )}
+//     </main>
+//   )
+// }
+
 import { AuthButton } from "@/components/AuthButton";
 import { AddProductForm } from "@/components/AddProductForm";
-import { Bell, Rabbit, Shield, TrendingDown, Sparkles } from "lucide-react"
+import { Bell, Rabbit, Shield, TrendingDown, Sparkles, MessageCircle } from "lucide-react" // Added MessageCircle
 import Image from "next/image"
 import { createClient } from "@/utils/supabase/server";
 import { getProducts } from "./actions";
@@ -289,11 +422,31 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Add Product Form - Adding a shadow wrapper for depth */}
-      <div className="relative z-20 -mb-10 px-6">
+      {/* Add Product Form & WhatsApp Toggle Shadow Wrapper */}
+      <div className="relative z-20 -mb-10 px-6 space-y-6">
         <div className="max-w-3xl mx-auto drop-shadow-[0_20px_50px_rgba(79,70,229,0.1)]">
           <AddProductForm user={user} />
         </div>
+
+        {/* WhatsApp Integration Toggle */}
+        {user && (
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white border border-slate-200/60 p-5 rounded-2xl flex justify-between items-center shadow-sm">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center">
+                  <MessageCircle className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400 font-bold">System Integration</p>
+                  <h3 className="text-sm font-bold text-slate-900 mt-0.5">WhatsApp Alerts</h3>
+                </div>
+              </div>
+              <button className="px-4 py-2 border border-slate-200 text-[10px] uppercase tracking-[0.2em] font-bold text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all rounded-lg">
+                Enable Signal
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Features - Modern Minimalist Cards */}
@@ -316,7 +469,7 @@ export default async function Home() {
 
       {/* Products Grid */}
       {user && products.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6 mt-24 pb-24">
+        <section className="max-w-7xl mx-auto px-6 mt-32 pb-24">
           <div className="flex items-end justify-between mb-10 border-b border-slate-100 pb-6">
             <div>
               <h3 className="text-3xl font-bold text-slate-900">Your Collection</h3>
@@ -335,9 +488,9 @@ export default async function Home() {
         </section>
       )}
 
-      {/* Empty State - Using a softer border and cleaner type */}
+      {/* Empty State */}
       {user && products.length === 0 && (
-        <section className="max-w-2xl mx-auto px-6 mt-20 pb-24 text-center">
+        <section className="max-w-2xl mx-auto px-6 mt-32 pb-24 text-center">
           <div className="bg-white rounded-3xl border border-slate-200 p-16 shadow-xs">
             <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
               <TrendingDown className="w-10 h-10 text-slate-300" />
@@ -354,5 +507,4 @@ export default async function Home() {
     </main>
   )
 }
-
 
