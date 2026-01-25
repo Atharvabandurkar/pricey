@@ -410,6 +410,27 @@ export async function addProduct(formData) {
 
     if (error) throw error;
 
+    // Inside your price check or addProduct logic
+    if (newPrice < existingProduct.current_price) {
+
+      // 1. Get user preferences from Supabase
+      const { data: userProfile } = await supabase
+        .from('profiles')
+        .select('whatsapp_number, whatsapp_enabled')
+        .eq('id', userId)
+        .single();
+
+      // 2. Trigger WhatsApp if enabled
+      if (userProfile?.whatsapp_enabled && userProfile?.whatsapp_number) {
+        await sendWhatsAppAlert(
+          userProfile.whatsapp_number,
+          productName,
+          newPrice,
+          productUrl
+        );
+      }
+    }
+
     // Insert price history if new product or price changed
     const shouldAddHistory =
       !isUpdate || existingProduct.current_price !== newPrice;
